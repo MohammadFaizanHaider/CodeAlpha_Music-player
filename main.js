@@ -2,6 +2,7 @@ let songIndex = 0;
 let audioElement =new Audio('songs/1.mpeg');
 let masterPlay = document.getElementById("masterPlay");
 let progressbar = document.getElementById("pro_bar");
+let volumeBar = document.getElementById("volumeBar");
 let masterSongName = document.getElementById("masterSongName");
 let songItems = Array.from(document.getElementsByClassName("songitems"));
 
@@ -200,7 +201,6 @@ document.getElementById("back").addEventListener('click', ()=> {
     currentGif.style.opacity = 1;
 });
 
-// YouTube Song Search
 let songSearch = document.getElementById("songSearch");
 let searchBtn = document.getElementById("searchBtn");
 
@@ -215,22 +215,17 @@ function searchSongOnYouTube() {
     }
 }
 
-// Button click
 searchBtn.addEventListener("click", searchSongOnYouTube);
 
-// Enter key press
 songSearch.addEventListener("keypress", function (e) {
     if (e.key === "Enter") {
         searchSongOnYouTube();
     }
 });
 
-// =========================
-// Dark / Light Mode Toggle
-// =========================
+
 let themeToggle = document.getElementById("themeToggle");
 
-// Page load par saved theme check karo
 if (localStorage.getItem("theme") === "light") {
     document.body.classList.add("light-mode");
     themeToggle.innerHTML = '<i class="fa-solid fa-moon"></i> Dark Mode';
@@ -239,7 +234,6 @@ if (localStorage.getItem("theme") === "light") {
     themeToggle.innerHTML = '<i class="fa-solid fa-sun"></i> Light Mode';
 }
 
-// Button click event
 themeToggle.addEventListener("click", () => {
     document.body.classList.toggle("light-mode");
 
@@ -251,3 +245,80 @@ themeToggle.addEventListener("click", () => {
         localStorage.setItem("theme", "dark");
     }
 });
+
+const volumeBtn = document.getElementById("volumeBtn");
+const volumePanel = document.getElementById("volumePanel");
+
+volumeBtn.onclick = (e)=>{
+
+    e.stopPropagation();
+
+    if(volumePanel.style.display=="flex"){
+
+        volumePanel.style.display="none";
+
+    }else{
+
+        volumePanel.style.display="flex";
+
+    }
+
+};
+
+document.addEventListener("click",()=>{
+
+    volumePanel.style.display="none";
+
+});
+
+volumePanel.onclick=(e)=>{
+
+    e.stopPropagation();
+
+};
+
+volUp.onclick = ()=>{
+
+    audioElement.volume = Math.min(1,audioElement.volume+0.1);
+
+    audioElement.muted = false;
+
+    updateVolumeUI();
+
+}
+
+volDown.onclick = ()=>{
+
+    audioElement.volume = Math.max(0,audioElement.volume-0.1);
+
+    audioElement.muted = false;
+
+    updateVolumeUI();
+
+}
+
+const bars = document.querySelectorAll(".volumeBars span");
+
+function updateVolumeUI(){
+
+    let percent = Math.round(audioElement.volume * 100);
+
+    volumePercent.innerHTML = percent + "%";
+
+    bars.forEach((bar,index)=>{
+
+        if(index < Math.ceil(percent/10)){
+
+            bar.classList.add("active");
+
+        }else{
+
+            bar.classList.remove("active");
+
+        }
+
+    });
+
+}
+
+updateVolumeUI();

@@ -397,7 +397,9 @@ h1::after{
     backdrop-filter: blur(15px);
     z-index: 999;
     padding: 14px 20px 18px;
-    overflow: hidden;
+    /* overflow: hidden; */
+    position: fixed;   /* ya jo tum use kar rahe ho */
+    overflow: visible;
 }
 .bottom::before{
     content: "";
@@ -618,6 +620,122 @@ body.light-mode #themeToggle {
     box-shadow: 0 0 12px rgba(0,0,0,0.12);
 }
 
+.volumeBox{
+    position:absolute;
+    right:35px;
+    bottom:35px;
+}
+
+#volumeBtn{
+
+    width:60px;
+    height:60px;
+
+    border:none;
+    border-radius:50%;
+
+    background:#18d8ff;
+    color:#fff;
+
+    cursor:pointer;
+
+    font-size:24px;
+
+    box-shadow:0 0 25px cyan;
+
+}
+ 
+ #volumePanel{
+    position:absolute;
+    bottom:75px;
+    right:0;
+    width:70px;
+    display:none;
+    align-items:center;
+    gap:12px;
+    padding:15px 10px;
+    background:#111;
+    border:2px solid cyan;
+    border-radius:20px;
+    box-shadow:0 0 25px cyan;
+    flex-direction:column;
+    opacity: 0;
+    transform: translateY(50px);
+    animation: animate 0.5s linear forwards;
+}
+@keyframes animate{
+    to{
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+#volumePanel button{
+
+    width:45px;
+    height:45px;
+
+    border:none;
+    border-radius:50%;
+
+    background:#222;
+
+    color:white;
+
+    font-size:18px;
+
+    cursor:pointer;
+
+}
+
+#volumePanel button:hover{
+
+    background:#18d8ff;
+
+}
+
+#volumePercent{
+
+    color:#18ff7b;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+}
+.showVolume{
+    opacity:1 !important;
+    visibility:visible !important;
+    transform:translateY(0) !important;
+}
+
+.volumeBars{
+    display:flex;
+    flex-direction:column-reverse;
+    gap:4px;
+    margin:10px 0;
+}
+
+.volumeBars span{
+
+    width:10px;
+    height:16px;
+
+    background:#333;
+
+    border-radius:10px;
+
+    transition:.3s;
+
+}
+
+.volumeBars span.active{
+
+    background:#18ff66;
+
+    box-shadow:0 0 10px #18ff66;
+
+}
+
 /* =========================RESPONSIVE========================= */
 @media (max-width: 1100px){
     .container{
@@ -651,6 +769,7 @@ body.light-mode #themeToggle {
     h1::after{
         display: none;
     }
+
 }
 @media (max-width: 768px){
     .songitems::after,
@@ -718,12 +837,6 @@ body.light-mode #themeToggle {
     .icons{
         gap: 24px;
     }
-
-    .bottom{
-        min-height: 130px;
-    }
-}
-@media (max-width: 768px){
     nav{
         padding-inline: 15px;
     }
@@ -773,8 +886,79 @@ body.light-mode #themeToggle {
     .icons{
         gap: 24px;
     }
-
+    #volumePanel{
+        height: 260px;
+    }
+    #volumeBars{
+        width: 90%;
+    }
+    #volumePanel button{
+        height: 51px;
+        width: 44px;
+        font-size: 12px;
+    }
+    .volumeBars{
+        min-height: 100px;
+    }
     .bottom{
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 10px;
         min-height: 130px;
+    }
+
+    .volumeBox{
+        position: absolute;
+        right: 15px;
+        bottom: 18px;
+    }
+
+    .popupIcon{
+        width:55px;
+        height:55px;
+        font-size:22px;
+        border-radius:50%;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+    }
+
+    .volumePopup{
+        position:absolute;
+        bottom:70px;
+        right:0;
+        width:65px;
+        height:220px;
+        padding:12px 8px;
+        border-radius:18px;
+        display:none;
+        flex-direction:column;
+        justify-content:flex-end;
+        align-items:center;
+        gap:6px;
+    }
+
+    .popupBars{
+        display:flex;
+        flex-direction:column-reverse;
+        gap:4px;
+    }
+
+    .popupBars span{
+        width:10px;
+        height:12px;
+        border-radius:10px;
+    }
+
+    .popupBars span.active{
+        background:#00ff66;
+        box-shadow:0 0 10px #00ff66;
+    }
+
+    #volumePercent{
+        font-size:15px;
+        margin-bottom:8px;
     }
 }
